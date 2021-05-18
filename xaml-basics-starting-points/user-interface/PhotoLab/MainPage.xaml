@@ -29,16 +29,71 @@
       xmlns:local="using:PhotoLab"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d"
       NavigationCacheMode="Enabled">
 
     <Page.Resources>
         <!-- Add the DataTemplate and style Setters here. -->
-        
+
+        <DataTemplate x:Key="ImageGridView_DefaultItemTemplate">
+            <Grid Height="300"
+                  Width="300"
+                  Margin="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Image x:Name="ItemImage"
+                       Source="Assets/StoreLogo.png"
+                       Stretch="Uniform" />
+
+                <StackPanel Orientation="Vertical"
+                            Grid.Row="1">
+                    <TextBlock Text="ImageTitle"
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <TextBlock Text="ImageFileType"
+                                   HorizontalAlignment="Center"
+                                   Style="{StaticResource CaptionTextBlockStyle}" />
+                        <TextBlock Text="ImageDimentions"
+                                   HorizontalAlignment="Center"
+                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                   Margin="8,0,0,0" />
+                    </StackPanel>
+
+                    <muxc:RatingControl Value="3"
+                                        IsReadOnly="True" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="ImageGridView_DefaultItemContainerStyle" TargetType="GridViewItem">
+            <Setter Property="Background" Value="Gray"/>
+            <Setter Property="Margin" Value="8"/>
+        </Style>
+        <ItemsPanelTemplate x:Key="ImageGridView_ItemsPanelTemplate">
+            <ItemsWrapGrid Orientation="Horizontal"
+            HorizontalAlignment="Center"/>
+        </ItemsPanelTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="TitleTextBlock"
+                   Text="Collection"
+                   Margin="24,0,0,24"
+                   Style="{StaticResource TitleTextBlockStyle}" />
         <!-- Add the TextBlock and GridView here. -->
-        
-    </Grid>
+        <GridView ItemsPanel="{StaticResource ImageGridView_ItemsPanelTemplate}" ItemContainerStyle="{StaticResource ImageGridView_DefaultItemContainerStyle}"
+                  ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}"
+                  x:Name="ImageGridView"
+                  Margin="0,0,0,8"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  RelativePanel.Below="TitleTextBlock"/>
+
+
+    </RelativePanel>
 </Page>
