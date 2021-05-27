@@ -133,7 +133,7 @@ namespace PhotoLab
             }
 
             // Remove this when replaced with XAML bindings
-            ImageGridView.ItemsSource = Images;
+            //ImageGridView.ItemsSource = Images;
         }
 
         public async static Task<ImageFileInfo> LoadImageInfo(StorageFile file)
@@ -155,5 +155,7 @@ namespace PhotoLab
                 return info;
             }
         }
+
+        private void DeleteSelectedImage() => Images.Remove(ImageGridView.SelectedItem as ImageFileInfo);
     }
 }
