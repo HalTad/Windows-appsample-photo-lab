@@ -23,6 +23,7 @@
 -->
 
 <Page x:Name="page"
+      SizeChanged="{x:Bind DetermineItemSize}"
       x:Class="PhotoLab.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -46,6 +47,7 @@
         <Flyout x:Key="zoomFlyout">
             <StackPanel>
                 <Slider x:Name="ZoomSlider"
+                        ValueChanged="{x:Bind DetermineItemSize}"
                         Minimum="180"
                         Maximum="540"
                         Value="270"
@@ -54,6 +56,7 @@
                         SnapsTo="Ticks"
                         Header="Grid item size" />
                 <ToggleSwitch x:Name="FitScreenToggle"
+                              Toggled="{x:Bind DetermineItemSizes}"
                               Header="Fit to screen"
                               ToolTipService.ToolTip="Resize images to use available space." />
             </StackPanel>
@@ -65,9 +68,9 @@
         </ItemsPanelTemplate>
 
         <DataTemplate x:Key="ImageGridView_DefaultItemTemplate"
-        x:DataType="local:ImageFileInfo">
-            <Grid Height="200"
-                  Width="200"
+                      x:DataType="local:ImageFileInfo">
+            <Grid Height="{Binding ItemSize, ElementName=page}"
+                  Width="{Binding ItemSize, ElementName=page}"
                   Margin="{StaticResource LargeItemMargin}">
                 <Grid.RowDefinitions>
                     <RowDefinition />

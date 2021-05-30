@@ -39,12 +39,28 @@ using Windows.UI.Xaml.Navigation;
 
 namespace PhotoLab
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         public static MainPage Current;
         private ImageFileInfo persistedItem;
 
         public ObservableCollection<ImageFileInfo> Images { get; } = new ObservableCollection<ImageFileInfo>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public double ItemSize
+        {
+            get => _itemSize;
+            set {
+                if (_itemSize != value)
+                {
+                    _itemSize = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemSize)));
+                }
+            }
+        }
+        private double _itemSize;
+
 
         public MainPage()
         {
@@ -157,5 +173,25 @@ namespace PhotoLab
         }
 
         private void DeleteSelectedImage() => Images.Remove(ImageGridView.SelectedItem as ImageFileInfo);
+
+        private void DetermineItemSize(){
+        if (FitScreenToggle != null
+            &&  FitScreenToggle.IsOn == true
+            && ImageGridView != null
+            && ZoomSlider != null){
+                int margins = (int)this.Resources["LargeItemMarginValue"] * 4;
+                double gridWidth = ImageGridView.ActualWidth - (int)this.Resources["DefaultWindowSidePaddingValue"];
+                double ItemWidth = ZoomSlider.Value + margins;
+
+                int columns = (int)Math.Max(gridWidth / ItemWidth, 1);
+
+                double adjustedGridWidth = gridWidth - (columns * margins);
+
+                ItemSize = (adjustedGridWidth / columns);
+            }
+            else{
+                ItemSize = ZoomSlider.Value;
+            }
+        }
     }
 }
