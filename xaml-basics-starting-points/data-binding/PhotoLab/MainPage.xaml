@@ -56,7 +56,7 @@
                         SnapsTo="Ticks"
                         Header="Grid item size" />
                 <ToggleSwitch x:Name="FitScreenToggle"
-                              Toggled="{x:Bind DetermineItemSizes}"
+                              Toggled="{x:Bind DetermineItemSize}"
                               Header="Fit to screen"
                               ToolTipService.ToolTip="Resize images to use available space." />
             </StackPanel>
@@ -121,19 +121,20 @@
                     RelativePanel.AlignRightWithPanel="True"
                     OverflowButtonVisibility="Collapsed"
                     DefaultLabelPosition="Right">
-            <AppBarButton Icon="Delete"
+            <!--<AppBarButton Icon="Delete"
                           Label="Delete selected image"
-                          Click="{x:Bind DeleteSelectedImage}" />
+                          Click="{x:Bind DeleteSelectedImage}" />-->
             <AppBarButton Icon="Zoom"
                           Label="Zoom"
                           Flyout="{StaticResource zoomFlyout}" />
         </CommandBar>
 
         <GridView x:Name="ImageGridView"
-        ItemsSource="{x:Bind Images}"
+                  ItemsSource="{x:Bind Images}"
                   animations:ReorderGridAnimation.Duration="400"
                   Margin="0,0,0,8"
                   IsItemClickEnabled="True"
+                  ItemClick="ImageGridView_ItemClick"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.AlignRightWithPanel="True"
                   RelativePanel.Below="TitleTextBlock"

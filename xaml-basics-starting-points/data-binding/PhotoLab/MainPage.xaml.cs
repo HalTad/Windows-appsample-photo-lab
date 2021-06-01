@@ -172,7 +172,7 @@ namespace PhotoLab
             }
         }
 
-        private void DeleteSelectedImage() => Images.Remove(ImageGridView.SelectedItem as ImageFileInfo);
+//        private void DeleteSelectedImage() => Images.Remove(ImageGridView.SelectedItem as ImageFileInfo);
 
         private void DetermineItemSize(){
         if (FitScreenToggle != null
@@ -192,6 +192,11 @@ namespace PhotoLab
             else{
                 ItemSize = ZoomSlider.Value;
             }
+        }
+
+        private void ImageGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Frame.Navigate(typeof(DetailPage), e.ClickedItem);
         }
     }
 }
